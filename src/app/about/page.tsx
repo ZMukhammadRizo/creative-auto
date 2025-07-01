@@ -95,7 +95,7 @@ export default function AboutPage() {
                   our team of certified professionals continues that tradition of excellence.
                 </p>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  We've had the privilege of working on everything from classic collectibles to modern supercars, 
+                  We&apos;ve had the privilege of working on everything from classic collectibles to modern supercars, 
                   always with the same commitment to quality and attention to detail that sets us apart.
                 </p>
               </motion.div>
