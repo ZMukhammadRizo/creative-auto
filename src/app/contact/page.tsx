@@ -147,7 +147,7 @@ export default function ContactPage() {
               >
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">Get A Quote</h2>
                 <p className="text-lg text-gray-600 mb-8">
-                  Fill out the form below and we'll get back to you within 24 hours with a personalized quote.
+                  Fill out the form below and we&apos;ll get back to you within 24 hours with a personalized quote.
                 </p>
 
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -231,7 +231,7 @@ export default function ContactPage() {
                       value={formData.message}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 transition-colors duration-300"
-                      placeholder="Tell us about your vehicle and what you're looking for..."
+                      placeholder="Tell us about your vehicle and what you&apos;re looking for..."
                     ></textarea>
                   </div>
 

@@ -83,7 +83,7 @@ export default function GalleryPreview() {
           whileInView="visible"
           viewport={{ once: true }}
         >
-          {galleryImages.map((image, index) => (
+          {galleryImages.map((image) => (
             <motion.div
               key={image.id}
               className="relative group cursor-pointer overflow-hidden rounded-lg"

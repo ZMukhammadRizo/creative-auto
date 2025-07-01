@@ -18,7 +18,7 @@ const testimonials = [
     id: 2,
     name: 'Sarah Mitchell',
     role: 'Mercedes Owner',
-    content: 'I\'ve tried several detailing services, but Creative Auto Boutique is in a league of their own. Professional, reliable, and the results speak for themselves.',
+    content: 'I&apos;ve tried several detailing services, but Creative Auto Boutique is in a league of their own. Professional, reliable, and the results speak for themselves.',
     rating: 5,
     location: 'Westside'
   },
@@ -70,7 +70,7 @@ export default function Testimonials() {
             What Our <span className="text-red-600">Clients Say</span>
           </h2>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Don't just take our word for it. Here's what our satisfied customers 
+            Don&apos;t just take our word for it. Here&apos;s what our satisfied customers 
             have to say about our services.
           </p>
         </motion.div>
@@ -96,7 +96,7 @@ export default function Testimonials() {
 
                 {/* Quote */}
                 <blockquote className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed italic">
-                  "{testimonials[currentIndex].content}"
+                  &quot;{testimonials[currentIndex].content}&quot;
                 </blockquote>
 
                 {/* Author */}
