@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { PhoneIcon, EnvelopeIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { getMotionProps } from '@/lib/useScrollAnimation';
 
 export default function CTA() {
   return (
@@ -10,10 +11,7 @@ export default function CTA() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            {...getMotionProps('fadeInLeft', 0)}
           >
             <h2 className="text-4xl font-bold text-white mb-6">
               Ready to Transform Your <span className="text-red-400">Vehicle?</span>
@@ -47,18 +45,12 @@ export default function CTA() {
           
           {/* Contact Info */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            {...getMotionProps('fadeInRight', 0)}
             className="space-y-6"
           >
             <motion.div 
               className="flex items-center text-white"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
+              {...getMotionProps('fadeInUp', 0.1)}
             >
               <div className="bg-red-600 p-3 rounded-full mr-4">
                 <PhoneIcon className="w-6 h-6" />
@@ -71,10 +63,7 @@ export default function CTA() {
             
             <motion.div 
               className="flex items-center text-white"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
+              {...getMotionProps('fadeInUp', 0.2)}
             >
               <div className="bg-red-600 p-3 rounded-full mr-4">
                 <EnvelopeIcon className="w-6 h-6" />
@@ -87,10 +76,7 @@ export default function CTA() {
             
             <motion.div 
               className="flex items-center text-white"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.6 }}
-              viewport={{ once: true }}
+              {...getMotionProps('fadeInUp', 0.3)}
             >
               <div className="bg-red-600 p-3 rounded-full mr-4">
                 <ClockIcon className="w-6 h-6" />

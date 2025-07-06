@@ -1,122 +1,259 @@
+'use client';
+
 import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChatBubbleLeftRightIcon, XMarkIcon } from '@heroicons/react/24/solid';
+import { ChatBubbleLeftRightIcon, XMarkIcon, PaperAirplaneIcon } from '@heroicons/react/24/solid';
 
-export default function ChatbotDemo() {
-  const [open, setOpen] = useState(false);
-  const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([
-    { from: 'bot', text: 'Hi! How can I help you today?' },
-    { from: 'user', text: 'Just checking out your services.' },
-    { from: 'bot', text: 'Great! Let me know if you have any questions.' },
+interface Message {
+  id: number;
+  text: string;
+  sender: 'user' | 'bot';
+  options?: string[];
+}
+
+export default function WorkingChatbot() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 1,
+      text: "Hello! Welcome to Creative Auto Boutique! 🚗✨ How can I help you today?",
+      sender: 'bot',
+      options: ["Services & Pricing", "Book Appointment", "About Us", "Contact Info"]
+    }
   ]);
-  const [typing, setTyping] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (open && messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [open, messages]);
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
-  // Simulate bot typing indicator
   useEffect(() => {
-    if (messages.length && messages[messages.length - 1].from === 'user') {
-      setTyping(true);
-      const timer = setTimeout(() => setTyping(false), 1200);
-      return () => clearTimeout(timer);
-    }
+    scrollToBottom();
   }, [messages]);
 
-  const handleSend = (e: React.FormEvent) => {
+  const responses: { [key: string]: { text: string; options?: string[] } } = {
+    "Services & Pricing": {
+      text: "We offer premium auto detailing services:\n\n🔸 Premium Wash & Detail - Starting at $199\n🔸 Paint Protection & Ceramic Coating - Starting at $599\n🔸 Paint Correction - Starting at $399\n🔸 Engine Bay Detail - Starting at $179\n\nWould you like details about any specific service?",
+      options: ["Premium Wash", "Paint Protection", "Paint Correction", "Engine Detail", "Back to Menu"]
+    },
+    "Premium Wash": {
+      text: "Our Premium Wash & Detail includes:\n\n✅ Hand wash exterior\n✅ Clay bar treatment\n✅ Paint correction (minor)\n✅ Interior deep clean\n✅ Leather conditioning\n✅ Window cleaning\n\nPrice: Starting at $199\nDuration: 3-4 hours\n\nWould you like to book this service?",
+      options: ["Book Now", "More Info", "Back to Services"]
+    },
+    "Paint Protection": {
+      text: "Our Paint Protection services:\n\n🛡️ Ceramic Coating (5-year warranty)\n🛡️ Paint Protection Film\n🛡️ UV Protection\n🛡️ Professional application\n\nPrice: Starting at $599\nDuration: Full day service\n\nInterested in protecting your vehicle?",
+      options: ["Book Consultation", "Learn More", "Back to Services"]
+    },
+    "Paint Correction": {
+      text: "Professional Paint Correction:\n\n🔧 Swirl mark removal\n🔧 Scratch repair\n🔧 Multi-stage polishing\n🔧 Paint restoration\n\nPrice: Starting at $399\nDuration: 4-6 hours\n\nReady to restore your paint?",
+      options: ["Schedule Service", "Get Quote", "Back to Services"]
+    },
+    "Engine Detail": {
+      text: "Engine Bay Detailing includes:\n\n🔩 Complete degreasing\n🔩 Steam cleaning\n🔩 Component protection\n🔩 Professional finish\n\nPrice: Starting at $179\nDuration: 2-3 hours\n\nWant to book this service?",
+      options: ["Book Service", "More Details", "Back to Services"]
+    },
+    "Book Appointment": {
+      text: "Great! To book your appointment:\n\n📞 Call us: (555) 123-4567\n📧 Email: info@creativeautoboutique.com\n🌐 Visit our contact page\n\nOur team will confirm your appointment within 24 hours!",
+      options: ["Call Now", "Send Email", "Contact Page", "Back to Menu"]
+    },
+    "About Us": {
+      text: "Creative Auto Boutique - Premium Auto Detailing\n\n✨ 10+ years of experience\n✨ 1000+ satisfied customers\n✨ Certified professionals\n✨ Premium products only\n✨ Full insurance coverage\n\nWe transform vehicles into masterpieces!",
+      options: ["Our Services", "Contact Us", "Back to Menu"]
+    },
+    "Contact Info": {
+      text: "📍 Creative Auto Boutique\n\n📞 Phone: (555) 123-4567\n📧 Email: info@creativeautoboutique.com\n🕒 Hours: Mon-Sat 8AM-6PM\n📍 Location: Downtown Auto District\n\nWe're here to help!",
+      options: ["Book Appointment", "Our Services", "Back to Menu"]
+    },
+    "Back to Menu": {
+      text: "What would you like to know more about?",
+      options: ["Services & Pricing", "Book Appointment", "About Us", "Contact Info"]
+    },
+    "Back to Services": {
+      text: "Which service interests you?",
+      options: ["Premium Wash", "Paint Protection", "Paint Correction", "Engine Detail", "Back to Menu"]
+    },
+    "Book Now": {
+      text: "Perfect! Please call us at (555) 123-4567 or visit our contact page to schedule your Premium Wash & Detail service. We'll have your car looking amazing!",
+      options: ["Call Now", "Contact Page", "Other Services", "Back to Menu"]
+    },
+    "More Info": {
+      text: "Our Premium Wash & Detail is our most popular service! It's perfect for regular maintenance and includes everything your car needs for a complete refresh. The process typically takes 3-4 hours and we use only premium products.",
+      options: ["Book Now", "View Pricing", "Other Services", "Back to Menu"]
+    }
+  };
+
+  const addMessage = (text: string, sender: 'user' | 'bot', options?: string[]) => {
+    const newMessage: Message = {
+      id: Date.now(),
+      text,
+      sender,
+      options
+    };
+    setMessages(prev => [...prev, newMessage]);
+  };
+
+  const handleOptionClick = (option: string) => {
+    // Add user message
+    addMessage(option, 'user');
+
+    // Show typing indicator
+    setIsTyping(true);
+
+    // Simulate bot response delay
+    setTimeout(() => {
+      setIsTyping(false);
+      const response = responses[option] || {
+        text: "I'm sorry, I didn't understand that. How can I help you with our auto detailing services?",
+        options: ["Services & Pricing", "Book Appointment", "About Us", "Contact Info"]
+      };
+      addMessage(response.text, 'bot', response.options);
+    }, 1000);
+  };
+
+  const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim()) return;
-    setMessages([...messages, { from: 'user', text: input }]);
-    setInput('');
+    if (!inputValue.trim()) return;
+
+    addMessage(inputValue, 'user');
+    setInputValue('');
+
+    // Show typing indicator
+    setIsTyping(true);
+
+    // Simulate bot response
+    setTimeout(() => {
+      setIsTyping(false);
+      addMessage("Thanks for your message! For the best assistance, please use the quick options above, or call us at (555) 123-4567 for immediate help.", 'bot', ["Services & Pricing", "Book Appointment", "Contact Info"]);
+    }, 1000);
   };
 
   return (
     <>
       {/* Floating Chat Button */}
       <motion.button
-        onClick={() => setOpen((v) => !v)}
-        className="fixed bottom-6 right-6 z-50 bg-gradient-to-br from-red-600 to-yellow-400 text-white rounded-full shadow-2xl w-16 h-16 flex items-center justify-center hover:scale-110 transition-transform border-4 border-white/30"
-        aria-label="Open chat"
+        onClick={() => setIsOpen(!isOpen)}
+        className={`fixed bottom-6 right-6 z-50 w-16 h-16 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 ${
+          isOpen 
+            ? 'bg-red-600 hover:bg-red-700 scale-95' 
+            : 'bg-gradient-to-br from-red-600 via-red-700 to-red-800 hover:scale-110 hover:shadow-red-500/25'
+        }`}
+        whileHover={{ scale: isOpen ? 0.95 : 1.1 }}
+        whileTap={{ scale: 0.9 }}
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        whileHover={{ scale: 1.1 }}
+        transition={{ type: "spring", stiffness: 260, damping: 20 }}
       >
-        <ChatBubbleLeftRightIcon className="w-8 h-8" />
+        <AnimatePresence mode="wait">
+          {isOpen ? (
+            <motion.div
+              key="close"
+              initial={{ rotate: -90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: 90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <XMarkIcon className="w-7 h-7 text-white" />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="chat"
+              initial={{ rotate: 90, opacity: 0 }}
+              animate={{ rotate: 0, opacity: 1 }}
+              exit={{ rotate: -90, opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <ChatBubbleLeftRightIcon className="w-7 h-7 text-white" />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </motion.button>
 
       {/* Chat Window */}
       <AnimatePresence>
-        {open && (
+        {isOpen && (
           <motion.div
-            key="chat-window"
-            initial={{ opacity: 0, y: 60, scale: 0.95 }}
+            initial={{ opacity: 0, y: 100, scale: 0.8 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 60, scale: 0.95 }}
-            transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-            className="fixed bottom-28 right-6 z-50 w-80 max-w-xs rounded-2xl shadow-2xl flex flex-col overflow-hidden backdrop-blur-lg bg-white/70 border border-white/30"
-            style={{ boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)' }}
+            exit={{ opacity: 0, y: 100, scale: 0.8 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="fixed bottom-24 right-6 z-40 w-96 max-w-[calc(100vw-2rem)] h-[500px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col overflow-hidden"
           >
             {/* Header */}
-            <div className="flex items-center justify-between px-5 py-3 bg-gradient-to-r from-black via-gray-900 to-red-700/90 text-white/90">
-              <div className="flex items-center gap-2">
-                <ChatBubbleLeftRightIcon className="w-6 h-6 text-yellow-400" />
-                <span className="font-bold tracking-wide text-base">AutoBot</span>
+            <div className="bg-gradient-to-r from-gray-900 via-red-700 to-red-600 text-white p-4 flex items-center space-x-3">
+              <div className="w-10 h-10 bg-white/20 rounded-full flex items-center justify-center">
+                <ChatBubbleLeftRightIcon className="w-6 h-6" />
               </div>
-              <button onClick={() => setOpen(false)} aria-label="Close chat" className="hover:text-yellow-400 transition-colors">
-                <XMarkIcon className="w-6 h-6" />
-              </button>
+              <div>
+                <h3 className="font-bold text-lg">Creative Auto Boutique</h3>
+                <p className="text-white/80 text-sm">Premium Auto Detailing</p>
+              </div>
             </div>
+
             {/* Messages */}
-            <div className="flex-1 overflow-y-auto px-4 py-3 space-y-2 bg-gradient-to-br from-white/80 to-gray-100/80" style={{ maxHeight: 320 }}>
-              {messages.map((msg, i) => (
-                <div key={i} className={`flex ${msg.from === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.04 }}
-                    className={`px-4 py-2 rounded-2xl text-sm shadow-md max-w-[80%] ${msg.from === 'user' ? 'bg-gradient-to-br from-yellow-400 to-red-400 text-black' : 'bg-black/90 text-yellow-200'}`}
-                  >
-                    {msg.text}
-                  </motion.div>
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+              {messages.map((message) => (
+                <div key={message.id} className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[80%] rounded-2xl px-4 py-3 ${
+                    message.sender === 'user' 
+                      ? 'bg-red-600 text-white' 
+                      : 'bg-white text-gray-800 shadow-sm border border-gray-200'
+                  }`}>
+                    <p className="whitespace-pre-line text-sm leading-relaxed">{message.text}</p>
+                    {message.options && (
+                      <div className="mt-3 space-y-2">
+                        {message.options.map((option, index) => (
+                          <button
+                            key={index}
+                            onClick={() => handleOptionClick(option)}
+                            className="block w-full text-left px-3 py-2 text-sm bg-red-50 hover:bg-red-100 text-red-700 rounded-lg transition-colors border border-red-200 hover:border-red-300"
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               ))}
-              {typing && (
+              
+              {isTyping && (
                 <div className="flex justify-start">
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="px-4 py-2 rounded-2xl text-sm bg-black/80 text-yellow-200 flex items-center gap-2 shadow-md"
-                  >
-                    <span className="block w-2 h-2 bg-yellow-400 rounded-full animate-bounce mr-1"></span>
-                    <span className="block w-2 h-2 bg-yellow-400 rounded-full animate-bounce mr-1" style={{ animationDelay: '0.2s' }}></span>
-                    <span className="block w-2 h-2 bg-yellow-400 rounded-full animate-bounce" style={{ animationDelay: '0.4s' }}></span>
-                    <span className="ml-2">Typing...</span>
-                  </motion.div>
+                  <div className="bg-white text-gray-800 rounded-2xl px-4 py-3 shadow-sm border border-gray-200">
+                    <div className="flex space-x-1">
+                      <div className="w-2 h-2 bg-red-400 rounded-full animate-bounce"></div>
+                      <div className="w-2 h-2 bg-red-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                      <div className="w-2 h-2 bg-red-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                    </div>
+                  </div>
                 </div>
               )}
               <div ref={messagesEndRef} />
             </div>
+
             {/* Input */}
-            <form onSubmit={handleSend} className="flex border-t border-white/20 bg-white/60 backdrop-blur px-2 py-2">
-              <input
-                type="text"
-                className="flex-1 px-3 py-2 text-sm rounded-xl focus:outline-none bg-white/80 placeholder-gray-400 text-gray-900 shadow-inner"
-                placeholder="Type your message..."
-                value={input}
-                onChange={e => setInput(e.target.value)}
-                autoFocus
-              />
-              <button type="submit" className="ml-2 px-4 py-2 rounded-xl bg-gradient-to-br from-yellow-400 to-red-500 text-white font-bold shadow hover:from-yellow-500 hover:to-red-600 transition-all">Send</button>
+            <form onSubmit={handleSendMessage} className="p-4 border-t border-gray-200 bg-white">
+              <div className="flex space-x-2">
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  placeholder="Type your message..."
+                  className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                />
+                <button
+                  type="submit"
+                  disabled={!inputValue.trim()}
+                  className="px-4 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <PaperAirplaneIcon className="w-5 h-5" />
+                </button>
+              </div>
             </form>
           </motion.div>
         )}
       </AnimatePresence>
     </>
   );
-} 
+}

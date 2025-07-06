@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
+import { getMotionProps } from '@/lib/useScrollAnimation';
 
 const achievements = [
   'Over 10 years of professional experience',
@@ -18,10 +19,7 @@ export default function AboutPreview() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            {...getMotionProps('fadeInLeft', 0)}
           >
             <h2 className="text-4xl font-bold text-gray-900 mb-6">
               Crafting Excellence in <span className="text-red-600">Auto Detailing</span>
@@ -41,19 +39,13 @@ export default function AboutPreview() {
             
             <motion.div 
               className="space-y-4 mb-8"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              viewport={{ once: true }}
+              {...getMotionProps('fadeInUp', 0.2)}
             >
               {achievements.map((achievement, index) => (
                 <motion.div 
                   key={index}
                   className="flex items-center"
-                  initial={{ opacity: 0, x: -20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.4, delay: 0.1 * index }}
-                  viewport={{ once: true }}
+                  {...getMotionProps('fadeInLeft', 0.3 + index * 0.1)}
                 >
                   <CheckCircleIcon className="w-6 h-6 text-red-600 mr-3" />
                   <span className="text-gray-700">{achievement}</span>
@@ -77,10 +69,7 @@ export default function AboutPreview() {
           {/* Image */}
           <motion.div
             className="relative"
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
+            {...getMotionProps('fadeInRight', 0)}
           >
             <div className="relative overflow-hidden rounded-lg shadow-xl">
               {/* Placeholder for actual image */}
@@ -99,27 +88,21 @@ export default function AboutPreview() {
             
             {/* Floating card */}
             <motion.div 
-              className="absolute -bottom-6 -left-6 bg-white p-6 rounded-lg shadow-lg border-l-4 border-red-600"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              viewport={{ once: true }}
+              className="absolute -bottom-6 -left-6 bg-white p-4 md:p-6 rounded-lg shadow-lg border-l-4 border-red-600 w-36"
+              {...getMotionProps('fadeInUp', 0.4)}
             >
               <div className="text-center">
-                <div className="text-2xl font-bold text-gray-900">10+</div>
-                <div className="text-sm text-gray-600">Years Experience</div>
+                <div className="text-xl md:text-2xl font-bold text-gray-900">10+</div>
+                <div className="text-xs md:text-sm text-gray-600">Years Experience</div>
               </div>
             </motion.div>
             
             <motion.div 
-              className="absolute -top-6 -right-6 bg-red-600 text-white p-4 rounded-lg shadow-lg"
-              initial={{ opacity: 0, y: -20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.7 }}
-              viewport={{ once: true }}
+              className="absolute -top-6 -right-6 bg-red-600 text-white p-3 md:p-4 rounded-lg shadow-lg w-28"
+              {...getMotionProps('fadeInUp', 0.6)}
             >
               <div className="text-center">
-                <div className="text-xl font-bold">1000+</div>
+                <div className="text-lg md:text-xl font-bold">1000+</div>
                 <div className="text-xs">Happy Clients</div>
               </div>
             </motion.div>

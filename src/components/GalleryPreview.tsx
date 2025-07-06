@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { getMotionProps } from '@/lib/useScrollAnimation';
 
 const galleryImages = [
   {
@@ -62,10 +63,7 @@ export default function GalleryPreview() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
+          {...getMotionProps('fadeInUp', 0)}
         >
           <h2 className="text-4xl font-bold text-white mb-4">
             Our Work <span className="text-red-400">Gallery</span>
@@ -81,9 +79,9 @@ export default function GalleryPreview() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "0px 0px -50px 0px" }}
         >
-          {galleryImages.map((image) => (
+          {galleryImages.map((image, index) => (
             <motion.div
               key={image.id}
               className="relative group cursor-pointer overflow-hidden rounded-lg"
@@ -121,10 +119,7 @@ export default function GalleryPreview() {
         
         <motion.div 
           className="text-center mt-12"
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
+          {...getMotionProps('fadeInUp', 0.2)}
         >
           <motion.a
             href="/gallery"

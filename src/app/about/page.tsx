@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { TrophyIcon, UserGroupIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { getMotionProps } from '@/lib/useScrollAnimation';
 
 const values = [
   {
@@ -78,10 +79,7 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
+                {...getMotionProps('fadeInLeft', 0)}
               >
                 <h2 className="text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
                 <p className="text-lg text-gray-600 mb-6 leading-relaxed">
@@ -101,10 +99,7 @@ export default function AboutPage() {
               </motion.div>
               
               <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
+                {...getMotionProps('fadeInRight', 0)}
                 className="relative"
               >
                 <div className="aspect-[4/3] bg-gradient-to-br from-gray-700 to-gray-800 rounded-lg flex items-center justify-center">
@@ -126,10 +121,7 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div 
               className="text-center mb-16"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
+              {...getMotionProps('fadeInUp', 0)}
             >
               <h2 className="text-4xl font-bold text-gray-900 mb-6">
                 Our Mission & <span className="text-red-600">Values</span>
@@ -145,10 +137,7 @@ export default function AboutPage() {
                 <motion.div
                   key={index}
                   className="bg-white p-8 rounded-lg shadow-lg text-center"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
+                  {...getMotionProps('fadeInUp', index * 0.1)}
                   whileHover={{ y: -5 }}
                 >
                   <div className="bg-red-100 p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center">
@@ -163,10 +152,7 @@ export default function AboutPage() {
             {/* Stats */}
             <motion.div 
               className="grid grid-cols-2 md:grid-cols-4 gap-8"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
+              {...getMotionProps('fadeInUp', 0.2)}
             >
               {stats.map((stat, index) => (
                 <div key={index} className="text-center">
@@ -183,10 +169,7 @@ export default function AboutPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div 
               className="text-center mb-16"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
+              {...getMotionProps('fadeInUp', 0)}
             >
               <h2 className="text-4xl font-bold text-gray-900 mb-6">
                 Meet Our <span className="text-red-600">Expert Team</span>
@@ -202,10 +185,7 @@ export default function AboutPage() {
                 <motion.div
                   key={index}
                   className="bg-gray-50 rounded-lg p-8 text-center"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
+                  {...getMotionProps('fadeInUp', index * 0.1)}
                   whileHover={{ y: -5 }}
                 >
                   <div className="w-24 h-24 bg-gradient-to-br from-gray-600 to-gray-700 rounded-full mx-auto mb-6 flex items-center justify-center">

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Loading from '@/components/Loading';
-import ChatbotDemo from '@/components/ChatbotDemo';
+import WorkingChatbot from '@/components/ChatbotDemo';
 
 const inter = Inter({
   variable: "--font-inter",
@@ -54,7 +54,7 @@ export default function RootLayout({
         <div className={`transition-opacity duration-1000 ${isLoading ? 'opacity-0' : 'opacity-100'}`}>
           {children}
         </div>
-        <ChatbotDemo />
+        <WorkingChatbot />
       </body>
     </html>
   );

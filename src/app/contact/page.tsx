@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import { PhoneIcon, EnvelopeIcon, MapPinIcon, ClockIcon } from '@heroicons/react/24/outline';
+import { getMotionProps } from '@/lib/useScrollAnimation';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -102,10 +103,7 @@ export default function ContactPage() {
                 <motion.div
                   key={index}
                   className="bg-gray-50 p-8 rounded-lg text-center hover:shadow-lg transition-shadow duration-300"
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
+                  {...getMotionProps('fadeInUp', index * 0.1)}
                   whileHover={{ y: -5 }}
                 >
                   <div className="bg-red-100 p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center">
@@ -140,10 +138,7 @@ export default function ContactPage() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               {/* Contact Form */}
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
+                {...getMotionProps('fadeInLeft', 0)}
               >
                 <h2 className="text-3xl font-bold text-gray-900 mb-6">Get A Quote</h2>
                 <p className="text-lg text-gray-600 mb-8">
@@ -163,7 +158,7 @@ export default function ContactPage() {
                         required
                         value={formData.name}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 transition-colors duration-300"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 transition-colors duration-300 placeholder-gray-500"
                         placeholder="Your full name"
                       />
                     </div>
@@ -177,7 +172,7 @@ export default function ContactPage() {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 transition-colors duration-300"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 transition-colors duration-300 placeholder-gray-500"
                         placeholder="(555) 123-4567"
                       />
                     </div>
@@ -194,7 +189,7 @@ export default function ContactPage() {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 transition-colors duration-300"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 transition-colors duration-300 placeholder-gray-500"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -208,9 +203,9 @@ export default function ContactPage() {
                       name="service"
                       value={formData.service}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 transition-colors duration-300"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 transition-colors duration-300 text-gray-700"
                     >
-                      <option value="">Select a service</option>
+                      <option value="" className="text-gray-500">Select a service</option>
                       <option value="premium-detail">Premium Wash & Detail</option>
                       <option value="paint-protection">Paint Protection</option>
                       <option value="paint-correction">Paint Correction</option>
@@ -230,15 +225,15 @@ export default function ContactPage() {
                       rows={5}
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 transition-colors duration-300"
-                      placeholder="Tell us about your vehicle and what you&apos;re looking for..."
+                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-red-500 focus:border-red-500 transition-colors duration-300 placeholder-gray-500 resize-none"
+                      placeholder="Tell us about your vehicle and what you're looking for..."
                     ></textarea>
                   </div>
 
                   <motion.button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-red-600 text-white px-8 py-4 rounded-md font-semibold hover:bg-red-700 disabled:bg-red-400 transition-colors duration-300"
+                    className="w-full bg-red-600 text-white px-8 py-4 rounded-md font-semibold hover:bg-red-700 disabled:bg-red-400 transition-colors duration-300 shadow-lg hover:shadow-xl"
                     whileHover={!isSubmitting ? { scale: 1.02 } : {}}
                     whileTap={!isSubmitting ? { scale: 0.98 } : {}}
                   >
@@ -249,10 +244,7 @@ export default function ContactPage() {
 
               {/* Map & Additional Info */}
               <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
+                {...getMotionProps('fadeInRight', 0)}
                 className="space-y-8"
               >
                 <div>
@@ -294,28 +286,83 @@ export default function ContactPage() {
           </div>
         </section>
 
-        {/* Emergency Contact */}
-        <section className="py-16 bg-red-600">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        {/* Emergency Contact - Enhanced with darker red and better visibility */}
+        <section className="py-16 bg-gradient-to-r from-red-800 via-red-900 to-red-800 relative overflow-hidden">
+          {/* Background Effects */}
+          <div className="absolute inset-0">
+            <motion.div 
+              className="absolute top-10 left-10 w-32 h-32 bg-red-600/10 rounded-full blur-2xl"
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.3, 0.6, 0.3]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <motion.div 
+              className="absolute bottom-10 right-10 w-40 h-40 bg-red-500/10 rounded-full blur-3xl"
+              animate={{
+                scale: [1, 1.3, 1],
+                opacity: [0.2, 0.5, 0.2]
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 1
+              }}
+            />
+          </div>
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
+              {...getMotionProps('fadeInUp', 0)}
             >
-              <h2 className="text-3xl font-bold text-white mb-4">
+              <motion.h2 
+                className="text-3xl md:text-4xl font-bold text-white mb-4 drop-shadow-lg"
+                animate={{
+                  textShadow: [
+                    "0 0 20px rgba(255,255,255,0.3)",
+                    "0 0 30px rgba(255,255,255,0.5)", 
+                    "0 0 20px rgba(255,255,255,0.3)"
+                  ]
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
                 Need Immediate Service?
-              </h2>
-              <p className="text-xl text-red-100 mb-6">
+              </motion.h2>
+              <p className="text-xl text-red-100 mb-8 max-w-2xl mx-auto drop-shadow-md">
                 Call us now for urgent detailing needs or same-day appointments.
               </p>
               <motion.a
                 href="tel:+15551234567"
-                className="bg-white text-red-600 px-8 py-4 rounded-md text-lg font-semibold hover:bg-gray-100 transition-colors duration-300 inline-block"
+                className="relative inline-flex items-center justify-center bg-white text-red-800 px-8 py-4 rounded-xl text-lg font-bold hover:bg-gray-50 transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
               >
+                <PhoneIcon className="w-6 h-6 mr-3" />
                 Call (555) 123-4567
+                
+                {/* Glow Effect */}
+                <motion.div
+                  className="absolute inset-0 bg-white rounded-xl opacity-20 blur-md"
+                  animate={{
+                    scale: [1, 1.1, 1],
+                    opacity: [0.2, 0.4, 0.2]
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
               </motion.a>
             </motion.div>
           </div>

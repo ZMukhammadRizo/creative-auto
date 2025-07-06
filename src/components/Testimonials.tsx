@@ -61,7 +61,7 @@ export default function Testimonials() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div 
           className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
@@ -81,10 +81,10 @@ export default function Testimonials() {
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
-                initial={{ opacity: 0, x: 50 }}
+                initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.5 }}
+                exit={{ opacity: 0, x: -30 }}
+                transition={{ duration: 0.4 }}
                 className="text-center"
               >
                 {/* Stars */}
@@ -95,7 +95,7 @@ export default function Testimonials() {
                 </div>
 
                 {/* Quote */}
-                <blockquote className="text-xl md:text-2xl text-gray-700 mb-8 leading-relaxed italic">
+                <blockquote className="text-lg md:text-xl text-gray-700 mb-6 md:mb-8 leading-relaxed italic">
                   &quot;{testimonials[currentIndex].content}&quot;
                 </blockquote>
 
@@ -117,16 +117,16 @@ export default function Testimonials() {
             {/* Navigation buttons */}
             <button
               onClick={prevTestimonial}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-colors duration-300"
+              className="absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/80 shadow-lg rounded-full p-2 hover:bg-white hover:shadow-xl transition-all duration-300 md:left-4"
             >
-              <ChevronLeftIcon className="w-6 h-6 text-gray-600" />
+              <ChevronLeftIcon className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
             </button>
             
             <button
               onClick={nextTestimonial}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white shadow-lg rounded-full p-2 hover:bg-gray-50 transition-colors duration-300"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/80 shadow-lg rounded-full p-2 hover:bg-white hover:shadow-xl transition-all duration-300 md:right-4"
             >
-              <ChevronRightIcon className="w-6 h-6 text-gray-600" />
+              <ChevronRightIcon className="w-5 h-5 md:w-6 md:h-6 text-gray-600" />
             </button>
           </div>
 
@@ -136,8 +136,8 @@ export default function Testimonials() {
               <button
                 key={index}
                 onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-colors duration-300 ${
-                  index === currentIndex ? 'bg-red-600' : 'bg-gray-300'
+                className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                  index === currentIndex ? 'bg-red-600 scale-110' : 'bg-gray-300 hover:bg-gray-400'
                 }`}
               />
             ))}

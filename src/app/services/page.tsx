@@ -1,63 +1,64 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { CheckCircleIcon, SparklesIcon, ShieldCheckIcon, WrenchScrewdriverIcon, BoltIcon } from '@heroicons/react/24/solid';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { SparklesIcon, ShieldCheckIcon, PaintBrushIcon, WrenchScrewdriverIcon, CheckCircleIcon } from '@heroicons/react/24/outline';
+import { getMotionProps } from '@/lib/useScrollAnimation';
 
 const services = [
   {
     icon: SparklesIcon,
     title: 'Premium Wash & Detail',
-    description: 'Complete exterior and interior detailing with premium products and techniques for a showroom finish.',
+    description: 'Our signature service combines meticulous hand washing with comprehensive interior and exterior detailing. Using only premium products, we ensure every surface of your vehicle receives the attention it deserves.',
     features: [
-      'Hand wash with pH-balanced soap',
-      'Clay bar treatment to remove contaminants',
-      'Two-step paint correction process',
-      'Interior deep clean and conditioning',
-      'Tire and wheel detailing',
-      'Glass cleaning inside and out'
+      'Hand wash and dry with premium microfiber',
+      'Paint decontamination and clay bar treatment',
+      'Interior deep cleaning and conditioning',
+      'Window cleaning inside and out',
+      'Tire and wheel cleaning and protection',
+      'Final inspection and quality assurance'
     ],
-    duration: '4-6 hours',
-    price: 'Starting at $299'
+    duration: '3-4 hours',
+    price: 'Starting at $199'
   },
   {
     icon: ShieldCheckIcon,
-    title: 'Paint Protection Package',
-    description: 'Advanced ceramic coating and paint protection film to preserve your vehicle\'s finish for years.',
+    title: 'Paint Protection & Ceramic Coating',
+    description: 'Advanced protection for your vehicles paint using state-of-the-art ceramic coating technology. This service provides long-lasting protection against environmental contaminants while enhancing the depth and clarity of your paint.',
     features: [
-      '9H hardness ceramic coating',
-      'Paint protection film on high-impact areas',
-      '5-year warranty included',
-      'UV protection and hydrophobic properties',
-      'Enhanced gloss and depth',
-      'Easy maintenance and cleaning'
+      'Multi-stage paint correction process',
+      'Professional ceramic coating application',
+      'UV protection and enhanced gloss',
+      'Hydrophobic properties for easy maintenance',
+      'Paint protection film installation available',
+      '5-year warranty on ceramic coating'
     ],
-    duration: '1-2 days',
-    price: 'Starting at $1,299'
-  },
-  {
-    icon: PaintBrushIcon,
-    title: 'Paint Correction',
-    description: 'Professional paint correction to remove swirl marks, scratches, and restore original shine.',
-    features: [
-      'Single or multi-stage correction',
-      'Swirl mark and scratch removal',
-      'Professional polishing compounds',
-      'Paint depth measurement',
-      'Before and after documentation',
-      'Paint sealant application'
-    ],
-    duration: '6-10 hours',
+    duration: 'Full day service',
     price: 'Starting at $599'
   },
   {
     icon: WrenchScrewdriverIcon,
-    title: 'Engine Bay Detailing',
-    description: 'Thorough engine bay cleaning and detailing to keep your engine compartment pristine.',
+    title: 'Paint Correction',
+    description: 'Professional paint correction service to restore your vehicles original luster. Our multi-stage process removes swirl marks, light scratches, and oxidation to reveal the true beauty of your paint.',
     features: [
-      'Complete degreasing process',
-      'Steam cleaning for deep sanitization',
+      'Comprehensive paint inspection and assessment',
+      'Multi-stage compounding and polishing',
+      'Swirl mark and scratch removal',
+      'Paint defect correction',
+      'Machine polishing for optimal results',
+      'Final polish and protection application'
+    ],
+    duration: '4-6 hours',
+    price: 'Starting at $399'
+  },
+  {
+    icon: BoltIcon,
+    title: 'Engine Bay Detailing',
+    description: 'Complete engine bay cleaning and detailing service that not only improves the appearance of your engine compartment but also helps maintain optimal performance and extends component life.',
+    features: [
+      'Safe engine degreasing and cleaning',
+      'Steam cleaning for thorough sanitization',
       'Component protection and dressing',
       'Plastic and rubber restoration',
       'Metal polishing where applicable',
@@ -110,10 +111,7 @@ export default function ServicesPage() {
                 <motion.div
                   key={index}
                   className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
-                  viewport={{ once: true }}
+                  {...getMotionProps('fadeInUp', index * 0.1)}
                 >
                   {/* Content */}
                   <div>
@@ -181,10 +179,7 @@ export default function ServicesPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <motion.div 
               className="text-center mb-12"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
+              {...getMotionProps('fadeInUp', 0)}
             >
               <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 Additional <span className="text-red-600">Services</span>
@@ -196,10 +191,7 @@ export default function ServicesPage() {
 
             <motion.div 
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
+              {...getMotionProps('fadeInUp', 0.2)}
             >
               {additionalServices.map((service, index) => (
                 <motion.div
@@ -221,10 +213,7 @@ export default function ServicesPage() {
         <section className="py-20 bg-red-600">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
             <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
+              {...getMotionProps('fadeInUp', 0)}
             >
               <h2 className="text-4xl font-bold text-white mb-6">
                 Ready to Book Your Service?
