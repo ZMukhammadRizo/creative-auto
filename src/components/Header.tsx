@@ -80,7 +80,7 @@ export default function Header() {
               initial="hidden"
               animate="visible"
             >
-              {navigation.map((item, index) => (
+              {navigation.map((item) => (
                 <motion.div
                   key={item.name}
                   variants={itemVariants}

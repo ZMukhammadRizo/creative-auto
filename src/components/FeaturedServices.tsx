@@ -126,7 +126,7 @@ export default function FeaturedServices() {
           viewport={{ once: true, margin: "0px 0px -50px 0px" }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
         >
-          {services.map((service, index) => (
+          {services.map((service) => (
             <motion.div
               key={service.title}
               variants={cardVariants}
