@@ -42,7 +42,7 @@ export default function Header() {
       transition={{ duration: 0.8, ease: "easeOut" }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center py-4">
+        <div className="flex items-center justify-between py-4">
           {/* Logo */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -53,7 +53,7 @@ export default function Header() {
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
-                className="relative"
+                className="relative flex-grow"
               >
                 <Image
                   src="/logo.png"
@@ -61,11 +61,11 @@ export default function Header() {
                   width={180}
                   height={50}
                   className="h-12 w-auto object-contain filter brightness-110 drop-shadow-lg group-hover:drop-shadow-xl transition-all duration-300"
+                  style={{ transform: 'translateZ(-1px)' }}
                 />
                 {/* Glow effect on hover */}
                 <motion.div
                   className="absolute inset-0 bg-red-500/20 blur-xl rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ transform: 'translateZ(-1px)' }}
                 />
               </motion.div>
             </Link>
@@ -155,7 +155,7 @@ export default function Header() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="flex items-center md:hidden">
             <motion.button
               className="p-2 rounded-lg text-gray-200 hover:text-white hover:bg-gray-800/50 transition-all duration-300"
               onClick={() => setIsOpen(!isOpen)}

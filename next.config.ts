@@ -24,7 +24,7 @@ const nextConfig: NextConfig = {
   // Experimental features for better performance
   experimental: {
     optimizePackageImports: ['@heroicons/react'],
-    optimizeCss: true,
+    optimizeCss: false,
   },
   
   // Bundle analysis
